@@ -1,0 +1,12 @@
+.label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 4px #f4d8d8 dashed;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.input {
+  display: none;
+}
