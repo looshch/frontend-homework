@@ -30,23 +30,23 @@ function EmailsForm() {
     [filesWithEmails]
   );
 
-  const onFileNameClick = (key) => {
+  const onFileDelete = (key) => {
     setFilesWithEmails((currentFilesWithEmails) =>
       currentFilesWithEmails.filter((f) => f.key !== key)
     );
   };
 
-  const [isUploading, setIsUploading] = useState(false);
-  const [result, setResultMessage] = useState({});
+  const [isSubmitting, setIsUploading] = useState(false);
+  const [submitResult, setSubmitResult] = useState({});
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setResultMessage("");
+    setSubmitResult("");
     setIsUploading(true);
 
     submitEmails(filesWithEmails.flatMap(({ emails }) => emails)).then((v) => {
       setIsUploading(false);
-      setResultMessage(v);
+      setSubmitResult(v);
       if (v.message) setFilesWithEmails([]);
     });
   };
@@ -76,14 +76,14 @@ function EmailsForm() {
         disabled={emailsCount === 0}
       />
 
-      {isUploading && <span> Uploading...</span>}
+      {isSubmitting && <span> Submitting...</span>}
 
       <div
         className={`margin-top-1 ${
-          result.error ? classes.error : classes.success
+          submitResult.error ? classes.error : classes.success
         }`}
       >
-        {result.error ? result.error : result.message}
+        {submitResult.error ? submitResult.error : submitResult.message}
       </div>
 
       <div className="margin-top-1">
@@ -92,8 +92,8 @@ function EmailsForm() {
             {`${name} has ${emails.length} emails`}
 
             <span
-              className={classes["file-name-delete-icon"]}
-              onClick={() => onFileNameClick(key)}
+              className={classes["file-delete-icon"]}
+              onClick={() => onFileDelete(key)}
             >
               x
             </span>
