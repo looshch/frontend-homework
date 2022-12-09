@@ -29,8 +29,8 @@ export const submitEmails = (emails) => {
       if (response.ok)
         return {
           message: `The email${
-            emails.length === 1 ? "" : "s"
-          } were successfully submitted`,
+            emails.length === 1 ? " was" : "s were"
+          } successfully submitted`,
         };
 
       const payload = await response.json();
@@ -57,7 +57,9 @@ export const submitEmails = (emails) => {
           switch (payload.error) {
             case "invalid_email_address":
               return {
-                error: `${payload.emails.join(", ")} are invalid`,
+                error: `${payload.emails.join(", ")} ${
+                  payload.emails.length === 1 ? "is" : "are"
+                } invalid`,
               };
             case "invalid_request_body":
               return {

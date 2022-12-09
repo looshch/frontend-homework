@@ -36,16 +36,19 @@ function EmailsForm() {
     );
   };
 
-  const [isSubmitting, setIsUploading] = useState(false);
-  const [submitResult, setSubmitResult] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitResult, setSubmitResult] = useState({
+    message: null,
+    error: null,
+  });
 
   const onSubmit = (e) => {
     e.preventDefault();
     setSubmitResult("");
-    setIsUploading(true);
+    setIsSubmitting(true);
 
     submitEmails(filesWithEmails.flatMap(({ emails }) => emails)).then((v) => {
-      setIsUploading(false);
+      setIsSubmitting(false);
       setSubmitResult(v);
       if (v.message) setFilesWithEmails([]);
     });
@@ -70,9 +73,7 @@ function EmailsForm() {
         id="submit"
         name="submit"
         type="submit"
-        value={`Submit${emailsCount === 0 ? "" : ` ${emailsCount}`} email${
-          emailsCount === 0 ? "" : "s"
-        }`}
+        value={`Submit ${emailsCount} email${emailsCount === 1 ? "" : "s"}`}
         disabled={emailsCount === 0}
       />
 
